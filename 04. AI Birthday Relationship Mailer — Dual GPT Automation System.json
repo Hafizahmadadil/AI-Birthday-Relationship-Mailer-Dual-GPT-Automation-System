@@ -1,0 +1,411 @@
+{
+  "name": "04. AI Birthday Relationship Mailer — Dual GPT Automation System",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "message",
+        "subject": "=Happy Birthday {{ $('If').item.json.Name }} 🎉",
+        "includeHtml": true,
+        "htmlMessage": "=<div style=\"font-family: 'Segoe UI', Arial, sans-serif; color:#2c2c2c; background-color:#f4f6fb; padding:30px; border-radius:12px; max-width:600px; margin:auto;\">\n  <div style=\"text-align:center; margin-bottom:25px;\">\n    <h2 style=\"color:#1a3c8e;\">🎉 Happy Birthday,{{ $('IF - Is Birthday Today?').item.json.Name }} ! 🎂</h2>\n    <p style=\"font-size:16px; color:#444;\">\n      Wishing you a wonderful day filled with <b>joy</b>, <b>success</b>, and <b>blessings</b>. \n      You truly deserve the best today and always! ✨\n    </p>\n  </div>\n  \n  <div style=\"background-color:#ffffff; border:1px solid #dfe4f2; border-radius:10px; padding:25px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05);\">\n    <h3 style=\"color:#1a3c8e;\">🎁 Your Exclusive Birthday Gift</h3>\n    <p style=\"font-size:15px; color:#555; margin-bottom:20px;\">\n      To celebrate your special day, we’re offering you a \n      <b style=\"color:#b8860b;\">50% OFF</b> on our \n      <b>AI Automation Masterclass</b> — the perfect opportunity to upgrade your skills this year.\n    </p>\n\n    <a href=\"https://docs.google.com/document/d/your-google-doc-link-here\" \n       style=\"background-color:#1a3c8e; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-weight:600; font-size:15px; display:inline-block;\">\n       🎁 Claim Your Offer\n    </a>\n    \n    <p style=\"font-size:13px; color:#777; margin-top:14px;\">\n      Offer valid for <b>7 days</b> after your birthday. Celebrate by investing in your future!\n    </p>\n  </div>\n\n  <div style=\"text-align:center; margin-top:25px;\">\n    <p style=\"font-size:14px; color:#666;\">Warm regards,</p>\n    <p style=\"font-weight:600; color:#1a3c8e;\">\n      Hafiz Ahmad Adil ✨<br>\n      <span style=\"font-size:12px; color:#999;\">AI Automation Trainer | AI/ML Enginner</span>\n    </p>\n  </div>\n</div>\n",
+        "message": "={{ $json.message.content }}",
+        "toList": [
+          "={{ $('Google Sheets - Read Birthdays').item.json.Email }}"
+        ],
+        "additionalFields": {}
+      },
+      "name": "Gmail - Send Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 1,
+      "position": [
+        704,
+        -16
+      ],
+      "id": "2e95a0a4-aa05-45dc-a443-d520185edd18",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nXkC8cKBKeAc6dRN",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"Birthday\"].substring(5)}}",
+              "value2": "={{new Date().toISOString().substring(5,10)}}"
+            }
+          ]
+        }
+      },
+      "name": "IF - Is Birthday Today?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        16
+      ],
+      "id": "80162c7d-a5ab-4df1-bb30-38909b14a2f1"
+    },
+    {
+      "parameters": {
+        "sheetId": "=1TegpRa4hVI3JlP-j2UgV9UFvqUy0FVByrFuoiX6gtDI",
+        "options": {}
+      },
+      "name": "Google Sheets - Read Birthdays",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        16
+      ],
+      "id": "4b108d41-8bf1-4274-ae45-2cb1ce08277c",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "szJVdnE063x6awuM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Description\n**AI Birthday Relationship Mailer — Dual GPT Automation System\n\nThis intelligent workflow, built in n8n, uses AI (GPT-3.5) to craft personalized birthday messages for both customers and family/friends — automatically, elegantly, and on time.\n\nEvery midnight, the workflow reads data from a Google Sheet, checks if anyone’s birthday matches the current date, and then classifies them using a Filter node:\n\nBranch 1 (Friends & Family): GPT writes warm, emotional messages using a friendly tone.\n\nBranch 2 (Customers/Students): GPT writes polite, professional birthday wishes and includes a special course offer from Google Docs.\n\nFinally, each message is wrapped in a custom HTML email and sent automatically through Gmail, maintaining a premium, consistent brand feel.**",
+        "width": 1776
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        -224
+      ],
+      "id": "e5736c3c-b322-42ea-879f-e13e45b3194e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "1IEmJ7kCkUudYClRtRM00loDpZ_07Igshp_5x2D6ycvc"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -16
+      ],
+      "id": "17642de5-1e60-487f-8cef-194858450fd4",
+      "name": "Get a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "Vzc2CtJ8KIwygP65",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "78adc6d0-1bd6-4ded-a191-277259041d9f",
+              "leftValue": "={{ $json.Relation }}",
+              "rightValue": "Customer",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "fae7e144-ec4e-429c-9cbe-d2ef03274705",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a professional AI communication assistant representing Hafiz Ahmad Adil, AI Automation and AI/ML Engineer.\nYour job is to create short, polite, and friendly birthday wishes for customers and students — written in a respectful, brand-consistent tone.\nAfter the wish, include a one-line special offer in a natural and pleasant way (not too salesy).\nKeep messages 3–4 lines max, with 1–2 professional emojis.\n",
+              "role": "system"
+            },
+            {
+              "content": "=Generate a short, professional birthday message (3–4 lines) for a customer or student.\n\nName: {{ $('If').item.json.Name }}\nRelation: {{ $('If').item.json.Relation }}\n\nAfter the birthday wish, include a pleasant one-line offer from this text:\n\"{{ $json[\"Offer_Text\"] }}\"\n\nTone: respectful, friendly, slightly promotional, and brand-aligned with Urdu AI.\nInclude 1–2 business-appropriate emojis (🎓✨💼🎁).\nOutput only the final message (no markdown).\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        384,
+        -16
+      ],
+      "id": "91809b8b-bcd9-4595-b645-13c648e1b965",
+      "name": "Message to Customer",
+      "credentials": {
+        "openAiApi": {
+          "id": "VDGHb3RZDDlanCf0",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Write a short, warm, and heartfelt birthday message (2–3 lines) for the following person.\n\nName: {{ $json.Name }}\nRelation: {{ $json[\"Relation\"] }}\n\nMake it sound personal and real — as if written by Hafiz Ahmad Adil himself. \nInclude 1–2 relevant emojis based on the relation (e.g., 🎂❤️🎉🙌).\nAvoid mentioning offers or promotions."
+            },
+            {
+              "content": "=Name: {{$json[\"Name\"]}}\nRelation: {{$json[\"Relation\"]}}\nYou are a friendly and caring AI assistant that helps Hafiz Ahmad Adil craft warm, emotional, and genuine birthday messages for his family and friends. \nYour tone should feel personal, loving, and human — not robotic. \nUse a soft, cheerful tone with light emojis, and always make the person feel valued.\nKeep the messages short (2–3 lines) and natural.\n",
+              "role": "system"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        400,
+        272
+      ],
+      "id": "3ffa7020-32c6-427d-b3b9-9429e0166e6d",
+      "name": "Message To Family Member",
+      "credentials": {
+        "openAiApi": {
+          "id": "O7CB1jRXkL9ctsM0",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json.Email }}",
+        "subject": "=Happy Birthday {{ $('If').item.json.Name }} 🎉 ",
+        "message": "=<div style=\"font-family:'Segoe UI', Arial, sans-serif; background-color:#f4f6fb; padding:30px; border-radius:12px; max-width:600px; margin:auto; color:#2c2c2c;\">\n  <div style=\"text-align:center; margin-bottom:20px;\">\n    <h2 style=\"color:#1a3c8e;\">🎉 Happy Birthday, {{ $('If').item.json.Name }}! 🎂</h2>\n  </div>\n\n  <div style=\"background-color:#ffffff; border:1px solid #dfe4f2; border-radius:10px; padding:25px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;\">\n    <p style=\"font-size:16px; color:#444; white-space:pre-line;\">\n      {{ $json[\"message\"][\"content\"] }}\n    </p>\n  </div>\n\n  <div style=\"text-align:center; margin-top:25px;\">\n    <p style=\"font-size:14px; color:#666;\">Warm regards,</p>\n    <p style=\"font-weight:600; color:#1a3c8e;\">Hafiz Ahmad Adil ✨<br>\n    <span style=\"font-size:12px; color:#999;\">AI Automation Trainer | Urdu AI</span></p>\n  </div>\n</div>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        688,
+        256
+      ],
+      "id": "7281bfaa-ff9d-4578-bd14-31c67a7bd1f9",
+      "name": "Send a message",
+      "webhookId": "abe2b490-6568-48a0-9e78-bc8e96010587",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nXkC8cKBKeAc6dRN",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n## Family Branch ",
+        "height": 272,
+        "width": 896,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        48,
+        176
+      ],
+      "id": "0f900787-8b5f-4019-813d-953442f4a033",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Customer Branch\n",
+        "height": 240,
+        "width": 896,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -64
+      ],
+      "id": "47e8408e-4fdd-4393-8ed2-e1c51f8ee61d",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 512,
+        "width": 880,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        -64
+      ],
+      "id": "3ea62ab8-b56b-48c1-8da2-0ddc1a68eac0",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {},
+      "name": "Cron - Midnight",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        16
+      ],
+      "id": "dd308de6-88bd-4cbf-884a-e95803d30b5f"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "IF - Is Birthday Today?": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets - Read Birthdays": {
+      "main": [
+        [
+          {
+            "node": "IF - Is Birthday Today?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document": {
+      "main": [
+        [
+          {
+            "node": "Message to Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get a document",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message To Family Member",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message to Customer": {
+      "main": [
+        [
+          {
+            "node": "Gmail - Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message To Family Member": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron - Midnight": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets - Read Birthdays",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cdc0fa18-651b-42e9-9c0d-53b33910f093",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "753353ac07b13689de1d95a72cd6a59150c954e2426e6a4b2a35e41d70b4cf44"
+  },
+  "id": "HvDNMGlqMz2Q8yCY",
+  "tags": [
+    {
+      "createdAt": "2025-10-31T09:44:21.042Z",
+      "updatedAt": "2025-10-31T09:44:21.042Z",
+      "id": "Cw34FAy9wNR3Ax0x",
+      "name": "AI"
+    },
+    {
+      "createdAt": "2025-10-31T09:36:51.672Z",
+      "updatedAt": "2025-10-31T09:36:51.672Z",
+      "id": "o337KUhhkE1JHBIs",
+      "name": "Intermediate (Useful)"
+    },
+    {
+      "createdAt": "2025-10-31T09:44:31.538Z",
+      "updatedAt": "2025-10-31T09:44:31.538Z",
+      "id": "t1e6TY1GZnH4jLZZ",
+      "name": "Google API"
+    }
+  ]
+}
